@@ -1,14 +1,44 @@
-const PersonForm = (props) => {
+import { useState } from 'react'
+
+const PersonForm = ({addName}) => {
+
+  const [newName, setNewName] = useState('')
+  const [newNumber, setNewNumber] = useState('')
+
+  
+  const handleNameChange = (event) => {
+    setNewName(event.target.value)
+  }
+
+  const handleNumberChange = (event) => {
+    setNewNumber(event.target.value)
+    }
+
+    const clearData = () => {
+      setNewName('')
+      setNewNumber('')
+  
+    }
+  
+    const addNameToDB = (event) => {
+      event.preventDefault()
+      addName({
+        name: newName,
+        number: newNumber,
+      })
+  
+      clearData()
+    }
 
     return(
-    <form onSubmit={props.addName}>
+    <form onSubmit={addNameToDB}>
     <div>
       <label htmlFor="name">name:</label>
-      <input value={props.newName} onChange={props.handleNameChange} id="name"/>
+      <input value={newName} onChange={handleNameChange} id="name"/>
     </div>
     <div>
       <label htmlFor="number">number:</label>
-      <input value={props.newNumber} onChange={props.handleNumberChange} id="number"/>
+      <input value={newNumber} onChange={handleNumberChange} id="number"/>
     </div>
     <div>
         <button type="submit">add</button>

@@ -13,8 +13,9 @@ test('renders numbers', () => {
       }
     ]
 
-  render(<Numbers persons={persons} />)
+  render(<Numbers persons={persons} chosenPerson={""} />)
 
-  const element = screen.getByText('Uuni Matikainen')
-  expect(element).toBeDefined()
+  const element1 = screen.getByText('Uuno Matikainen 050-3121211')
+  const element2 = screen.getByText('Elsa 04-09343434')
+  // expect(element).toBeDefined()
 })

@@ -7,8 +7,6 @@ import Numbers from './components/Numbers'
 
 const App = () => {
   const [persons, setPersons] = useState([]) 
-  const [newName, setNewName] = useState('')
-  const [newNumber, setNewNumber] = useState('')
   const [chosenPerson, setNewChoice] = useState('')
   const [message, setNewMessage] = useState({data:null, type:"info"})
 
@@ -21,14 +19,6 @@ const App = () => {
   }
 
   useEffect(hook, [])
-
-  const handleNameChange = (event) => {
-    setNewName(event.target.value)
-  }
-
-  const handleNumberChange = (event) => {
-    setNewNumber(event.target.value)
-    }
 
   const handlePersonChange = (event) => {
     setNewChoice(event.target.value)
@@ -53,16 +43,16 @@ const App = () => {
     }
   }
 
-  const updateNumber = (id) => {
+  const updateNumber = (id, newnumber) => {
     const person = persons.find((person => person.id === id))
-    const updatedData = {...person, number: newNumber}
+    const updatedData = {...person, number: newnumber}
     nameService
     .replace(id, updatedData)
     .then( () => { 
       setPersons(persons.map(person => {
       if (person.id === id) {
         handleNotification({data:`Updated ${person.name}'s number`, type:"info"})
-        return {...person, number: newNumber}
+        return {...person, number: newnumber}
       } else { 
         return person
         }
@@ -81,31 +71,25 @@ const App = () => {
     
   }
   
-  const addName = (event) => {
-    event.preventDefault()
-    const personObject = {
-      name: newName,
-      number: newNumber,
-    }
-    if (persons.some((person) => person.name === newName))
+  const addName = (personObject) => {
+
+    if (persons.some((person) => person.name === personObject.name))
     {
-      let proceed = confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
+      let proceed = confirm(`${personObject.name} is already added to phonebook, replace the old number with a new one?`)
       if (proceed) { 
-      const index = persons.findIndex((person) => person.name === newName)
-      updateNumber(persons[index].id)
+      const index = persons.findIndex((person) => person.name === personObject.name)
+      updateNumber(persons[index].id, personObject.number)
       }
     } else {
         nameService
         .create(personObject)
         .then(newPerson => {
           setPersons(persons.concat(newPerson))
-          handleNotification({data:`Added ${newName}`, type:"info"})
+          handleNotification({data:`Added ${personObject.name}`, type:"info"})
         })
         .catch(error => {
           handleNotification({data: `${error.response.data.error}`, type:"error"})
         })
-        setNewName('')
-        setNewNumber('')
     }
   }
 
@@ -115,13 +99,7 @@ const App = () => {
       <Notification message={message} />
       <Filter handlePersonChange={handlePersonChange} chosenPerson={chosenPerson}/>
       <h3>add a new:</h3>
-      <PersonForm 
-        handleNameChange = {handleNameChange}
-        handleNumberChange = {handleNumberChange}
-        addName = {addName}
-        newName = {newName}
-        newNumber= {newNumber}
-      />
+      <PersonForm addName = {addName}/>
       <Numbers persons= {persons} chosenPerson={chosenPerson} deletePerson = {deletePerson}/>
       </div>
   )
