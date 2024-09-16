@@ -4,10 +4,17 @@ import stylisticJs from '@stylistic/eslint-plugin-js'
 
 
 export default [
-  { files: ['**/*.js'], languageOptions: { sourceType: 'commonjs' } },
-  { languageOptions: { globals: { ...globals.browser, ...globals.node } } },
+  // { files: ['**/*.js'], languageOptions: { sourceType: 'commonjs' } },
+  // { languageOptions: { globals: { ...globals.browser, ...globals.node } },
+  // },
+  { files: ['**/*.js'] },
+  { languageOptions: {
+    ecmaVersion: 2022,
+    sourceType: 'module',
+    globals: { ...globals.browser, ...globals.node } },
+  },
   pluginJs.configs.recommended,
-  { ignores: ['dist/*'] },
+  { ignores: ['dist/*', 'Frontend/dist/*'] },
   { plugins: {
     '@stylistic/js': stylisticJs
   } },
