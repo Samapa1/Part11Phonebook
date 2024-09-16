@@ -2,7 +2,7 @@ const { test, describe, expect, beforeEach } = require('@playwright/test')
 
 describe('Phonebook', () => {
   beforeEach(async ({ page }) => {
-    await page.goto('http://localhost:5173/')
+    await page.goto('http://localhost:3001/')
   })
   test('front page can be opened', async ({ page }) => {
     await expect(page.getByText('Phonebook')).toBeVisible()

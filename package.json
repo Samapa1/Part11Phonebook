@@ -6,7 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
-    "build:ui": "rm -rf dist && cd ../FullStackOsa3Frontend && npm run build && cp -r dist ../FullStackOsa3",
+    "build:ui": "rm -rf dist && cd ./Frontend && npm run build && cp -r dist ./",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
     "lint": "eslint .",
     "test:e2e": "playwright test",
