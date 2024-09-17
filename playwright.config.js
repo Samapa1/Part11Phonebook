@@ -1,6 +1,6 @@
 // @ts-check
-const { defineConfig, devices } = require('@playwright/test');
-const path = require('path');
+const { defineConfig, devices } = require('@playwright/test')
+const path = require('path')
 
 /**
  * Read environment variables from file.
