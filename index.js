@@ -24,20 +24,17 @@ const errorHandler = (error, request, response, next) => {
   next(error)
 }
 
-// const createRandomId = () => {
-//     return Math.floor(Math.random() * 10000)
-// }
-
 app.use(cors())
 
 app.use(express.json())
 
 app.use(express.static('dist'))
 
-// tehtävä 3.7
-// app.use(morgan('tiny'))
-
 app.use(morgan(':method :url :status :res[content-length] :response-time ms :personData'))
+
+app.get('/health', (req, res) => {
+  res.send('ok')
+})
 
 app.get('/info', (request, response) => {
   let dateTime = new Date()
