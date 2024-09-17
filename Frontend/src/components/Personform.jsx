@@ -34,11 +34,11 @@ const PersonForm = ({addName}) => {
     <form onSubmit={addNameToDB}>
     <div>
       <label htmlFor="name">name:</label>
-      <input value={newName} onChange={handleNameChange} id="name"/>
+      <input data-testid='name' value={newName} onChange={handleNameChange} id="name"/>
     </div>
     <div>
       <label htmlFor="number">number:</label>
-      <input value={newNumber} onChange={handleNumberChange} id="number"/>
+      <input data-testid='number' value={newNumber} onChange={handleNumberChange} id="number"/>
     </div>
     <div>
         <button type="submit">add</button>
