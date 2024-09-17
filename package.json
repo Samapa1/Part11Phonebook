@@ -8,6 +8,7 @@
     "dev": "nodemon index.js",
     "build:ui": "rm -rf dist && cd ./Frontend && npm run build && cp -r dist ./",
     "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
+    "deploy": "./build_step.sh",
     "lint": "eslint .",
     "test:e2e": "playwright test",
     "test:report": "playwright show-report",
