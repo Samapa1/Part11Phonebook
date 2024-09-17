@@ -73,14 +73,14 @@ module.exports = defineConfig({
     {
       // backend
       command: 'npm run dev',
-      url: 'http://localhost:3001',
+      port: 3001,
       timeout: 120 * 1000,
       reuseExistingServer: !process.env.CI,
     },
     {
       // frontend
       command: 'cd Frontend/ && npm run dev',
-      url: 'http://localhost:5173',
+      port: 5173,
       timeout: 120 * 1000,
       reuseExistingServer: !process.env.CI,
     }
