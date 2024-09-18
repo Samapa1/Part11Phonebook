@@ -4,6 +4,7 @@ const morgan = require('morgan')
 const cors = require('cors')
 require('dotenv').config()
 const Person = require('./models/person')
+const personsRouter = require('./controllers/persons')
 
 morgan.token('personData', function(req) {
   if (req.method === 'POST') {
@@ -46,66 +47,11 @@ app.get('/info', (request, response) => {
   })
 })
 
-app.get('/api/persons', (request, response) => {
-  Person.find({}).then(person => {
-    response.json(person)
-  })
-})
-
-app.get('/api/persons/:id', (request, response, next) => {
-  Person.findById(request.params.id).then(person => {
-    if (person) {
-      response.json(person)
-    } else {
-      response.status(404).end()
-    }
-  })
-    .catch(error => next(error))
-})
-
-
-app.delete('/api/persons/:id', (request, response, next) => {
-  Person.findByIdAndDelete(request.params.id).then(() => {
-    response.status(204).end()
-  })
-    .catch(error => next(error))
-})
-
-app.post('/api/persons', (request, response, next) => {
-  const body = request.body
-
-  const person = new Person({
-    name: body.name,
-    number: body.number
-  })
-
-  person.save()
-    .then(savedPerson => {
-      response.json(savedPerson)
-    })
-    .catch(error => next(error))
-
-})
-
-app.put('/api/persons/:id', (request, response, next) => {
-  const body = request.body
-
-  const person = {
-    name: body.name,
-    number: body.number,
-  }
-
-  Person.findByIdAndUpdate(request.params.id, person, { new: true, runValidators: true })
-    .then(updatedData => {
-      response.json(updatedData)
-    })
-    .catch(error => next(error))
-})
+app.use('/api/persons', personsRouter)
 
 if (process.env.NODE_ENV === 'test') {
   const testingRouter = require('./controllers/testing')
   app.use('/api/testing', testingRouter)
-  // console.log('test-router')
 }
 
 const PORT = process.env.PORT
